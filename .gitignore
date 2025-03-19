@@ -1,11 +1,6 @@
-*.csv
-*/*.csv
-*/*.xlsx
-*.xlsx
-*.arrow.gz
-*.parquet.gz
 __pycache__/
 */__pycache__/
+.vscode/
 
 
 .python-version
