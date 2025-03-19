@@ -1,0 +1,34 @@
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+line_length = 131
+
+[tool.black]
+line-length = 131
+
+[tool.mypy]
+exclude = "build"
+explicit_package_bases = true
+strict = true
+disallow_untyped_defs = false
+
+[tool.pylint.MASTER]
+max-line-length = 131
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+    "too-few-public-methods",
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "broad-exception-caught",
+    "broad-exception-raised",
+    "logging-fstring-interpolation",
+    "logging-not-lazy",
+]
+
+[tool.pylint.SIMILARITIES]
+min-similarity-lines = 10
+
+[tool.pylint.DESIGN]
+max-attributes = 10
