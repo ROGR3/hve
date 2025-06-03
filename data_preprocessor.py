@@ -19,8 +19,8 @@ def main() -> None:
     processor = PersonPeriodTemplateProcessor()
     file_storage = ArrowPolarsDataframeStorage(LocalFileStorage(), "./data/")
 
-    cpzp_df = read_csv("./data/CPZP.csv", separator=";")
-    ozp_df = read_csv("./data/OZP.csv", separator=";")
+    cpzp_df = read_csv("./data/raw/CPZP.csv", separator=";")
+    ozp_df = read_csv("./data/raw/OZP.csv", separator=";")
 
     with TimeTracker("Preprocessing CPZP dataframe"):
         cpzp_df = cpzp_person_week_generator.generate(cpzp_df)

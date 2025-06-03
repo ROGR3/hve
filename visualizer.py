@@ -38,21 +38,25 @@ class GraphMaker:
                 self.__acms_by_age[age_status] = []
                 self.__deaths_by_age[age_status] = []
             for vac_status in analysed_vaccine_statuses:
+                print("Calculating:", age_status, vac_status)
                 result = self.__acm_calculator.compute_person_years_acm(df, age_status, vac_status, is_using_months)
+                if result.total_deaths < 3:
+                    self.__acms_by_age[age_status].append(0)
+                    self.__deaths_by_age[age_status].append(0)
                 self.__acms_by_age[age_status].append(result.acm)
                 self.__deaths_by_age[age_status].append(result.total_deaths)
-                print("Calculating:", age_status, vac_status)
 
         self.__vaccine_labels = analysed_vaccine_statuses
 
     def draw_simple_bar_chart(self, output_file: str) -> None:
         x_positions = range(len(self.__acms_by_age.keys()))
-        bar_width = 0.04
+        bar_width = 0.06
         bar_gap = 0.02
 
         _, ax = plt.subplots(figsize=(10, 10))
 
         for i, (vac_status, color) in enumerate(zip(self.__vaccine_labels, COLORS)):
+            vac_label = VaccineStatus(vac_status).name
             x_offsets = [x + i * (bar_width + bar_gap) for x in x_positions]
             heights = [values[i] for _, values in self.__acms_by_age.items()]
 
@@ -60,7 +64,7 @@ class GraphMaker:
                 x_offsets,
                 heights,
                 bar_width,
-                label=vac_status,
+                label=vac_label,
                 color=color,
                 edgecolor="black",
             )
@@ -74,27 +78,32 @@ class GraphMaker:
                     ha="center",
                     va="bottom",
                     color="black",
-                    fontsize=9,
+                    fontsize=11,
                 )
 
         ax.grid(axis="y", color="black", linewidth=0.5)
-
+        ax.set_ylim(0, 30000)
+        ax.set_yticks(range(0, 30001, 10000))
+        ax.tick_params(axis="y", labelsize=16)
+        ax.tick_params(axis="x", labelsize=16)
         ax.set_xticks([x + bar_width * (len(self.__vaccine_labels) / 2) for x in x_positions])
         ax.set_xticklabels(self.__acms_by_age.keys())
-        ax.set_ylabel("Number of deaths per 100,000 person-years")
+        ax.set_ylabel("Number of deaths per 100,000 person-years", fontsize=18)
         ax.legend(title="Vaccination Status")
 
         plt.tight_layout()
-        plt.savefig(output_file)
+        plt.savefig(output_file, dpi=300)
 
     def __is_df_using_months(self, df: DataFrame) -> bool:
         return all(df["time_period"].str.contains(r"^\d{4}M\d{2}$"))
 
 
-FROM_DATE = datetime(2021, 1, 1)
-TO_DATE = datetime(2022, 12, 30)
+FROM_DATE = datetime(2021, 10, 1)
+TO_DATE = datetime(2022, 5, 31)
+# FROM_DATE = datetime(2021, 6, 1)
+# TO_DATE = datetime(2021, 9, 30)
 FILE_NAME = "CPZP_from_2020_to_2022"
-OUTPUT_FILE_NAME = "CPZP_test"
+OUTPUT_FILE_NAME = "CPZP_high_covid2"
 
 
 def main() -> None:
