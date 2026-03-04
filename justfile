@@ -11,10 +11,9 @@ run_pipeline:
     just preprocess && just simulate && just visualise
 
 lint:
-    uv run isort .
-    uv run mypy .
-    uv run pylint $(find . -name "*.py" -not -path "./.venv/*")
-    uv run black .
+    uv run ruff check .
+    uv run ruff format --check .
+    uv run ty check .
 
 test:
     uv run pytest .

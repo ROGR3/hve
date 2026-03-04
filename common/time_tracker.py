@@ -1,12 +1,12 @@
 import time
+from collections.abc import Generator
 from contextlib import contextmanager
 from datetime import datetime
-from typing import Any, Generator
+from typing import Any
 
-import psutil  # type: ignore
+import psutil
 
 
-# pylint: disable=invalid-name
 @contextmanager
 def TimeTracker(action_name: str) -> Generator[Any, Any, Any]:
     process = psutil.Process()

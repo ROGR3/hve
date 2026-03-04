@@ -1,4 +1,3 @@
-from typing import Optional
 from unittest import TestCase
 
 from polars import DataFrame
@@ -133,18 +132,18 @@ class TestVaccineStatusExpression(TestCase):
 
     def __create_base_df(
         self,
-        overrides: Optional[dict[TempColumn, list[int]]] = None,
+        overrides: dict[TempColumn, list[int]] | None = None,
         num_of_rows: int = 1,
     ) -> DataFrame:
         if overrides is None:
             overrides = {}
 
-        if len(overrides):
+        if overrides:
             num_of_rows = max(len(v) for v in overrides.values())
 
         base_data = {col.value: [None] * num_of_rows for col in TempColumn}
 
         for key, values in overrides.items():
-            base_data[key.value] = values  # type: ignore
+            base_data[key.value] = values
 
         return DataFrame(base_data)

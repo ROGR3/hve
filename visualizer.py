@@ -55,7 +55,7 @@ class GraphMaker:
 
         _, ax = plt.subplots(figsize=(10, 10))
 
-        for i, (vac_status, color) in enumerate(zip(self.__vaccine_labels, COLORS)):
+        for i, (vac_status, color) in enumerate(zip(self.__vaccine_labels, COLORS, strict=True)):
             vac_label = VaccineStatus(vac_status).name
             x_offsets = [x + i * (bar_width + bar_gap) for x in x_positions]
             heights = [values[i] for _, values in self.__acms_by_age.items()]

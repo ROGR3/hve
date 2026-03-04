@@ -3,7 +3,7 @@ name = "furst-paper-correction"
 version = "0.1.0"
 description = "Fürst paper correction analysis"
 readme = "readme.md"
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 dependencies = [
     "matplotlib>=3.10",
     "numpy>=2.2",
@@ -14,44 +14,19 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "black>=25.1",
-    "isort>=6.0",
-    "mypy>=1.15",
-    "pylint>=3.3",
+    "ruff>=0.15",
+    "ty>=0.0.20",
     "pytest>=8.3",
 ]
 
-[tool.isort]
-profile = "black"
-combine_as_imports = true
-line_length = 131
-
-[tool.black]
+[tool.ruff]
+target-version = "py313"
 line-length = 131
+extend-exclude = [".venv", "build", "dist"]
 
-[tool.mypy]
-exclude = "build"
-explicit_package_bases = true
-strict = true
-disallow_untyped_defs = false
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "PL", "RUF"]
+extend-ignore = ["PLR2004"]
 
-[tool.pylint.MASTER]
-max-line-length = 131
-
-[tool.pylint."MESSAGES CONTROL"]
-disable = [
-    "too-few-public-methods",
-    "missing-module-docstring",
-    "missing-class-docstring",
-    "missing-function-docstring",
-    "broad-exception-caught",
-    "broad-exception-raised",
-    "logging-fstring-interpolation",
-    "logging-not-lazy",
-]
-
-[tool.pylint.SIMILARITIES]
-min-similarity-lines = 10
-
-[tool.pylint.DESIGN]
-max-attributes = 10
+[tool.ruff.format]
+quote-style = "double"

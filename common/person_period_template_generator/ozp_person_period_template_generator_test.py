@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 from unittest import TestCase
 
 from polars import DataFrame, Series, Utf8, col
@@ -64,7 +63,7 @@ class TestOzpPersonPeriodTemplateGenerator(TestCase):
             dose_series = self.__get_column_for_person(
                 df=result,
                 person_id=1,
-                col_name=f"dose{idx+1}",  # +1 because dose 0 does not exist
+                col_name=f"dose{idx + 1}",  # +1 because dose 0 does not exist
             )
             self.assertTrue(all(val == expected_index for val in dose_series))
 
@@ -125,18 +124,18 @@ class TestOzpPersonPeriodTemplateGenerator(TestCase):
 
     def __create_base_df(
         self,
-        overrides: Optional[dict[OzpBaseColumn, list[str | int]]] = None,
+        overrides: dict[OzpBaseColumn, list[str | int]] | None = None,
         num_of_rows: int = 1,
     ) -> DataFrame:
         if overrides is None:
             overrides = {}
 
-        if len(overrides):
+        if overrides:
             num_of_rows = max(len(v) for v in overrides.values())
 
         base_data = {col: ["" if dtype == Utf8 else None] * num_of_rows for col, dtype in OzpBaseDfSchema.items()}
 
         for key, values in overrides.items():
-            base_data[key.value] = values  # type: ignore
+            base_data[key.value] = values
 
         return DataFrame(base_data, schema=OzpBaseDfSchema)

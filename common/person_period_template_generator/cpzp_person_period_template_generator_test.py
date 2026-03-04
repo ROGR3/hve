@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
@@ -74,7 +73,7 @@ class TestCpzpPersonPeriodTemplateGenerator(TestCase):
             dose_series = self.__get_column_for_person(
                 df=result,
                 person_id=1,
-                col_name=f"dose{idx+1}",  # + 1 cause dose 0 does not exist
+                col_name=f"dose{idx + 1}",  # + 1 cause dose 0 does not exist
             )
 
             self.assertTrue(all(val == expected_index for val in dose_series))
@@ -140,13 +139,13 @@ class TestCpzpPersonPeriodTemplateGenerator(TestCase):
 
     def __create_base_df(
         self,
-        overrides: Optional[dict[CpzpBaseColumn, list[str]]] = None,
+        overrides: dict[CpzpBaseColumn, list[str]] | None = None,
         num_of_rows: int = 1,
     ) -> DataFrame:
         if overrides is None:
             overrides = {}
 
-        if len(overrides):
+        if overrides:
             num_of_rows = max(len(v) for v in overrides.values())
 
         base_data = {col.value: [""] * num_of_rows for col in CpzpBaseColumn}
