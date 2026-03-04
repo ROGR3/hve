@@ -93,7 +93,6 @@ HVE_PROBABILITY = 0.0
 
 
 def main() -> None:
-
     file_storage = ArrowPolarsDataframeStorage(LocalFileStorage(), "./data/")
 
     cohort_simulator = CohortSimulator()
