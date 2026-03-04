@@ -1,3 +1,26 @@
+[project]
+name = "furst-paper-correction"
+version = "0.1.0"
+description = "Fürst paper correction analysis"
+readme = "readme.md"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib>=3.10",
+    "numpy>=2.2",
+    "polars>=1.25",
+    "pyarrow>=19.0",
+    "psutil>=7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=25.1",
+    "isort>=6.0",
+    "mypy>=1.15",
+    "pylint>=3.3",
+    "pytest>=8.3",
+]
+
 [tool.isort]
 profile = "black"
 combine_as_imports = true
