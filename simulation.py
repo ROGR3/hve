@@ -1,7 +1,7 @@
 import random
 from datetime import datetime
 
-from polars import DataFrame, Int64, col
+from polars import DataFrame, UInt32, col
 
 from common.file_storage.dataframe_storage import ArrowPolarsDataframeStorage
 from common.file_storage.file_storage import LocalFileStorage
@@ -76,7 +76,7 @@ class CohortSimulator:
             }
         )
 
-        return persons_df.with_columns(col(TempColumn.PERSON_ID).cast(Int64)).join(weeks_df, how="cross")
+        return persons_df.with_columns(col(TempColumn.PERSON_ID).cast(UInt32)).join(weeks_df, how="cross")
 
     def __initialize_population(self) -> list[Individual]:
         return [Individual(i) for i in range(1, NUMBER_OF_INDIVIDUALS)]
